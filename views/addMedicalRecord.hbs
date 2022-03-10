@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="text-center">
+                <label for="email">ADD MEDICAL RECORD</label>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form action="/records/" method="post">
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="medicine" class="form-label">Medicine</label>
+                        <div class="col-xs-2">
+                            <select class="form-control" name="medicineCode">
+                                {{#each medicineList}}
+                                    <option value="{{this.code}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" name="amount" placeholder="0">
+                </div>
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date</label>
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control" id="date" name="date" placeholder="mm/dd/yyyy">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="doctor" class="form-label">Doctor</label>
+                        <div class="col-xs-2">
+                            <select class="form-control" name="doctorId">
+                                {{#each doctorList}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" id="patientId" name="patientId" value="{{patientId}}">
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center"><button type="submit" class="btn btn-success">ADD</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="text-center">
+                <a href="/getPatientMedicalRecords"><button type="button" class="btn btn-warning">BACK HOME</button></a>
+            </div>
+            <hr>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#datepicker').datepicker();
+    });
+</script>

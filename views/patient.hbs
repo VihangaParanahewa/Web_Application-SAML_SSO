@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form action="/getPatientInfo" method="post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="text-center">
+                                    <label for="email">ENTER PATIENT EMAIL ADDRESS</label>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" class="form-control text-center" id="email"
+                                           placeholder="abc@gmail.com"
+                                           name="email" value={{email}}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    {{#if displayInfo}}
+        <br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <table class="table table-borderless">
+                <tbody>
+                <tr>
+                    <td>PATIENT NAME</td>
+                    <td>{{patient.name}}</td>
+                </tr>
+                <tr>
+                    <td>PATIENT EMAIL</td>
+                    <td>{{patient.email}}</td>
+                </tr>
+                <tr>
+                    <td>PATIENT DATE OF BIRTH</td>
+                    <td>{{patient.dateOfBirth}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+        <hr>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="text-center">
+                <label for="email">MEDICAL RECORDS</label>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">MEDICINE</th>
+                        <th scope="col">DOCTOR</th>
+                        <th scope="col">AMOUNT</th>
+                        <th scope="col">DATE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each medicalRecords}}
+                    <tr>
+                        <td>{{this.medicine}}</td>
+                        <td>{{this.doctor}}</td>
+                        <td>{{this.amount}}</td>
+                        <td>{{this.date}}</td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    {{/if}}
+</div>
