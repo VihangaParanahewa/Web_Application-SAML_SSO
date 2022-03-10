@@ -35,7 +35,7 @@ router.post('/', function(req, res, next) {
         })
         .catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
             return res.redirect('/patient/');
@@ -59,7 +59,7 @@ router.get('/delete/:patientId', function(req, res, next) {
       })
       .catch(error => {
           console.log(error);
-          if(error.response.status === 403) {
+          if(error.response.status === 401) {
               return res.redirect('/login');
           }
           return res.redirect('/getPatientBasicInfo');

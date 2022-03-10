@@ -113,7 +113,7 @@ router.get('/getPatientBasicInfo',
             })
             .catch(error => {
                 console.log(error);
-                if(error.response.status === 403) {
+                if(error.response.status === 401) {
                     return res.redirect('/login');
                 }
                 res.render('admin', {patient: {}, email: patient_Email, displayInfo: false});
@@ -182,7 +182,7 @@ router.get('/getPatientInfo',
             res.render('patient', {patient: patientInfo, medicalRecords: medicalRecordList, email: patient_Email, displayInfo: true});
         })).catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
             res.render('patient', {patient: {}, medicalRecords: [], email: patient_Email, displayInfo: false});
@@ -248,7 +248,7 @@ router.get('/getPatientMedicalRecords',
         res.render('doctor', { email: selectedEmail, patient_id: patientId, medicalRecords: medicalRecordList, displayInfo: true});
         })).catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
             res.render('doctor', { email: selectedEmail, patient_id: "", medicalRecords: [], displayInfo: false});

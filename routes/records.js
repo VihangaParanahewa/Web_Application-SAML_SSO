@@ -32,7 +32,7 @@ router.post('/', function(req, res, next) {
         })
         .catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
             return res.redirect('/getPatientMedicalRecords');
@@ -56,7 +56,7 @@ router.get('/:patientId', function(req, res, next) {
         }))
         .catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
             return res.redirect('/getPatientMedicalRecords');
@@ -85,7 +85,7 @@ router.get('/:recordId/:patientId', function(req, res, next) {
         })
         .catch(error => {
             console.log(error);
-            if(error.response.status === 403) {
+            if(error.response.status === 401) {
                 return res.redirect('/login');
             }
         });
