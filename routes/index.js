@@ -55,7 +55,7 @@ var redirectToLogin = (req, res, next) => {
 /* GET home page. */
 router.get('/', redirectToLogin, function(req, res, next) {
     // console.log(userRole)
-    res.render(view_Category, { displayInfo: false });
+    res.render(view_Category, { displayInfo: false, email: patient_Email });
 });
 
 /* GET login page. */
@@ -65,6 +65,15 @@ router.get('/login',
         failureRedirect: '/login'
     })
 );
+
+router.get('/profile', (req, res) => {
+    let userInfo = {
+        "username" : userProfile.username,
+        "role" : userRole,
+        "email" : userProfile.nameID
+    }
+    res.render('profile', { user : userInfo });
+});
 
 router.get('/logout', (req, res) => {
   if (req.user == null) {
@@ -259,10 +268,12 @@ router.get('/getPatientMedicalRecords',
 router.post(
     '/saml/consume',
     passport.authenticate('saml', {
-      failureRedirect: '/failed',
-      failureFlash: true
+        failureRedirect: '/failed',
+        failureFlash: true
     }),
     (req, res) => {
+        let assertion = userProfile.getAssertionXml();
+        let urlEncoded = base64url(assertion);
 
         const body = 'client_id=' + process.env.CLIENT_ID
             + '&client_secret=' + process.env.CLIENT_SECRET
@@ -275,7 +286,32 @@ router.post(
             }
         };
 
+
+        // saml assertion extraction from saml response
+        // var samlResponse = res.req.body.SAMLResponse;
+        // var decoded = base64decode(samlResponse);
+        // // console.log("Saml",decoded);
+        // var assertion = userProfile.getAssertionXml();
+        // console.log("assertion", assertion);
+        // var urlEncoded = base64url(assertion);
+        // console.log("urlEncoded", urlEncoded);
+
+        // const body2 = 'client_id=' + process.env.CLIENT_ID
+        //     + '&client_secret=' + process.env.CLIENT_SECRET
+        //     + '&grant_type=' + process.env.GRANT_TYPE
+        //     + '&assertion=' + urlEncoded
+        //     + '&scope='
+
+        // axios.post('https://127.0.0.1:8244/token', body2 + process.env.COMMON_SCOPE, config)
+        //     .then((res1) => {
+        //         console.log("accessToken:", res1.data)
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
+
         let roles = userProfile.role;
+        console.log("UserProfile : ",userProfile);
 
         if(roles.includes('admin')) {
             view_Category = 'admin'
@@ -310,6 +346,7 @@ router.post(
         } else if(roles.includes('Patient')) {
             view_Category = 'patient'
             userRole = 'Patient'
+            patient_Email = userProfile.nameID
             axios.post('https://127.0.0.1:8244/token', body + process.env.COMMON_SCOPE, config)
                 .then((res1) => {
                     process.env.COMMON_TOKEN = res1.data.access_token;
@@ -324,21 +361,6 @@ router.post(
             userRole = 'Invalid'
             return res.redirect('/');
         }
-      // // saml assertion extraction from saml response
-      // var samlResponse = res.req.body.SAMLResponse;
-      // var decoded = base64decode(samlResponse);
-      // // console.log("Saml",decoded);
-      // var assertion =
-      //     ('<saml2:Assertion' + decoded.split('<saml2:Assertion')[1]).split(
-      //         '</saml2:Assertion>'
-      //     )[0] + '</saml2:Assertion>';
-      // // console.log("assertion", assertion);
-      // var urlEncoded = base64url(assertion);
-      // // console.log("urlEncoded", urlEncoded);
-      //
-
-
-      // success redirection to / home page
     }
 );
 
