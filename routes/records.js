@@ -44,7 +44,7 @@ router.get('/:patientId', function(req, res, next) {
     const config = {
         httpsAgent: agent,
         headers: {
-            'Authorization': 'Bearer ' + process.env.INFO_TOKEN
+            'Authorization': 'Bearer ' + process.env.COMMON_TOKEN
         }
     };
 

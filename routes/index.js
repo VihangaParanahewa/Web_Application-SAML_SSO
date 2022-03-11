@@ -100,7 +100,7 @@ router.get('/getPatientBasicInfo',
         const config = {
             httpsAgent: agent,
             headers: {
-                'Authorization': 'Bearer ' + process.env.INFO_TOKEN
+                'Authorization': 'Bearer ' + process.env.COMMON_TOKEN
             }
         };
 
@@ -133,7 +133,7 @@ router.get('/getPatientInfo',
         const config = {
             httpsAgent: agent,
             headers: {
-                'Authorization': 'Bearer ' + process.env.INFO_TOKEN
+                'Authorization': 'Bearer ' + process.env.COMMON_TOKEN
             }
         };
 
@@ -204,7 +204,7 @@ router.get('/getPatientMedicalRecords',
     const config = {
         httpsAgent: agent,
         headers: {
-                'Authorization': 'Bearer ' + process.env.INFO_TOKEN
+                'Authorization': 'Bearer ' + process.env.COMMON_TOKEN
             }
         };
 
@@ -281,10 +281,10 @@ router.post(
             view_Category = 'admin'
             userRole = 'Admin'
             axios.all([
-                axios.post('https://127.0.0.1:8244/token', body + process.env.INFO_SCOPE, config),
+                axios.post('https://127.0.0.1:8244/token', body + process.env.COMMON_SCOPE, config),
                 axios.post('https://127.0.0.1:8244/token', body + process.env.ADMIN_ONLY_SCOPE, config)
             ]).then(axios.spread((res1, res2) => {
-                process.env.INFO_TOKEN = res1.data.access_token;
+                process.env.COMMON_TOKEN = res1.data.access_token;
                 process.env.ADMIN_ONLY_TOKEN = res2.data.access_token;
                 return res.redirect('/');
                 }))
@@ -296,10 +296,10 @@ router.post(
             view_Category = 'doctor'
             userRole = 'Doctor'
             axios.all([
-                axios.post('https://127.0.0.1:8244/token', body + process.env.INFO_SCOPE, config),
+                axios.post('https://127.0.0.1:8244/token', body + process.env.COMMON_SCOPE, config),
                 axios.post('https://127.0.0.1:8244/token', body + process.env.DOCTOR_ONLY_SCOPE, config)
             ]).then(axios.spread((res1, res2) => {
-                process.env.INFO_TOKEN = res1.data.access_token;
+                process.env.COMMON_TOKEN = res1.data.access_token;
                 process.env.DOCTOR_ONLY_TOKEN = res2.data.access_token;
                 return res.redirect('/');
             }))
@@ -310,9 +310,9 @@ router.post(
         } else if(roles.includes('Patient')) {
             view_Category = 'patient'
             userRole = 'Patient'
-            axios.post('https://127.0.0.1:8244/token', body + process.env.INFO_SCOPE, config)
+            axios.post('https://127.0.0.1:8244/token', body + process.env.COMMON_SCOPE, config)
                 .then((res1) => {
-                    process.env.INFO_TOKEN = res1.data.access_token;
+                    process.env.COMMON_TOKEN = res1.data.access_token;
                     return res.redirect('/');
                 })
                 .catch(error => {
