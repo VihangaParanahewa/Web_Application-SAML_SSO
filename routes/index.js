@@ -8,7 +8,6 @@ var axios = require('axios');
 const https = require('https');
 const { base64decode } = require('nodejs-base64');
 const base64url = require('base64url');
-const Console = require("console");
 
 const agent = new https.Agent({
     rejectUnauthorized: false
@@ -79,6 +78,11 @@ router.get('/logout', (req, res) => {
   if (req.user == null) {
     return res.redirect('/login');
   }
+
+    userProfile='';
+    userRole='';
+    patient_Email='';
+    view_Category='';
 
   return strategy.logout(req, (err, uri) => {
     req.logout();
@@ -277,7 +281,9 @@ router.post(
 
         const body = 'client_id=' + process.env.CLIENT_ID
             + '&client_secret=' + process.env.CLIENT_SECRET
-            + '&grant_type=client_credentials&scope='
+            + '&grant_type=' + process.env.GRANT_TYPE
+            + '&assertion=' + urlEncoded
+            + '&scope='
 
         const config = {
             httpsAgent: agent,
@@ -286,32 +292,8 @@ router.post(
             }
         };
 
-
-        // saml assertion extraction from saml response
-        // var samlResponse = res.req.body.SAMLResponse;
-        // var decoded = base64decode(samlResponse);
-        // // console.log("Saml",decoded);
-        // var assertion = userProfile.getAssertionXml();
-        // console.log("assertion", assertion);
-        // var urlEncoded = base64url(assertion);
-        // console.log("urlEncoded", urlEncoded);
-
-        // const body2 = 'client_id=' + process.env.CLIENT_ID
-        //     + '&client_secret=' + process.env.CLIENT_SECRET
-        //     + '&grant_type=' + process.env.GRANT_TYPE
-        //     + '&assertion=' + urlEncoded
-        //     + '&scope='
-
-        // axios.post('https://127.0.0.1:8244/token', body2 + process.env.COMMON_SCOPE, config)
-        //     .then((res1) => {
-        //         console.log("accessToken:", res1.data)
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
         let roles = userProfile.role;
-        console.log("UserProfile : ",userProfile);
+        // console.log("UserProfile : ",userProfile);
 
         if(roles.includes('admin')) {
             view_Category = 'admin'

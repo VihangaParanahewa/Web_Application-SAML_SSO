@@ -30,6 +30,8 @@ SAML_LOGOUTURL="https://localhost:9443/samlsso"
 WSO2_ROLE_CLAIM="http://wso2.org/claims/role"
 WSO2_EMAIL_CLAIM="http://wso2.org/claims/emailaddress"
 
+GRANT_TYPE="urn:ietf:params:oauth:grant-type:saml2-bearer"
+
 COMMON_TOKEN=""
 DOCTOR_ONLY_TOKEN=""
 ADMIN_ONLY_TOKEN=""

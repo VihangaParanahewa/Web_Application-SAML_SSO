@@ -19,7 +19,7 @@
     "https": "^1.0.0",
     "morgan": "~1.9.1",
     "nodejs-base64": "^2.0.0",
-    "passport": "^0.5.2",
-    "passport-saml": "2.2.0"
+    "passport": "0.5.2",
+    "passport-saml": "3.2.1"
   }
 }
